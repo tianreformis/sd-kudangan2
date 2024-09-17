@@ -17,16 +17,22 @@ const RootLayout = ({
 }: {
   children: React.ReactNode
 }) => {
+
+
+ 
   return (
     <html lang="en">
       <body className={poppins.className}>
+        
+          
+        
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
-          
+          <Navbar />
           {children}
         </ThemeProvider>
 

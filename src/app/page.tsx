@@ -5,7 +5,7 @@ import { CarouselDemo } from "@/components/carousel";
 const Home = () => {
     return (
         <div className="flex min-h-screen w-full flex-col">
-            <Navbar />
+            
 
             <div className="mt-2 sm:mt-0 h-56 flex flex-col sm:flex-row justify-start items-center">
                 <div className="text-2xl sm:text-4xl text-wrap">
@@ -22,7 +22,7 @@ const Home = () => {
                 </div>
 
             </div>
-            <CarouselDemo />
+            
         </div>
 
 
