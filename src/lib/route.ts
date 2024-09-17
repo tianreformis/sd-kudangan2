@@ -1,6 +1,13 @@
 'use client'
 import { useRouter } from 'next/navigation'
 
+class Rute{
+    router = useRouter();
+
+    HomeRoute = () => {
+        this.router.push('/');
+    }
+}
 function Routing({
 
 }) {
@@ -17,9 +24,5 @@ function Routing({
     };
 }
 
-const HomeRoute = () =>{
-    const router = useRouter();
-    router.push('/');
-}
 
 export default Routing;
