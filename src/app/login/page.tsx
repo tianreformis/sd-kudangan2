@@ -16,7 +16,8 @@ export const description =
 
 const LoginPage = () => {
     return (
-        <Card className="mx-auto max-w-sm">
+        <div className="flex min-h-screen w-full flex-col justify-center align-middle">
+            <Card className="mx-auto max-w-sm flex flex-col justify-center align-middle">
             <CardHeader>
                 <CardTitle className="text-2xl">Login</CardTitle>
                 <CardDescription>
@@ -58,6 +59,9 @@ const LoginPage = () => {
                 </div>
             </CardContent>
         </Card>
+        </div>
+            
+        
     )
 }
 
