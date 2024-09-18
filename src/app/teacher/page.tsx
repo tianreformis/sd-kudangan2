@@ -3,8 +3,9 @@ import avatar from "@/images/photo-1.jpg"
 const TeacherPage= () => {
     return (
         <div>Guru Guru
-            <div className="">
-                <Image className="object-scale-down w-100 h-100"
+            <div className="h-95 w-95">
+                <Image className=""
+                               
                 src={avatar}
                 alt="logo"
              
@@ -15,4 +16,4 @@ const TeacherPage= () => {
     )
 }
 
-export default TeacherPage;
+export default TeacherPage;                  
