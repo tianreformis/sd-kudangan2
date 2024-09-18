@@ -4,8 +4,9 @@ import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import { ThemeProvider } from "@/components/theme-provider"
 
+
 const inter = Inter({ subsets: ['latin'] })
-const poppins = Poppins({ subsets: ['latin'], weight: ['100', '500'] })
+const poppins = Poppins({ subsets: ['latin'], weight: ['400', ] })
 
 export const metadata: Metadata = {
   title: 'SD Kudangan 2',
@@ -19,13 +20,9 @@ const RootLayout = ({
 }) => {
 
 
- 
   return (
     <html lang="en">
       <body className={poppins.className}>
-        
-          
-        
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -33,7 +30,9 @@ const RootLayout = ({
           disableTransitionOnChange
         >
           <Navbar />
-          {children}
+          <main className='mx-5 my-5'>
+            {children}
+          </main>
         </ThemeProvider>
 
       </body>
