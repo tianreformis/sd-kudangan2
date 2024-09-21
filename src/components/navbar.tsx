@@ -1,11 +1,11 @@
 'use client'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from "next/link"
-import { CircleUser, Menu, Package2, Search, Atom } from "lucide-react"
+import {  Menu,   Atom } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import ToggleDarkTheme from "./theme-switcher"
-import Routing from "@/lib/route"
+
 
 export const description =
   "A settings page. The settings page has a sidebar navigation and a main content area. The main content area has a form to update the store name and a form to update the plugins directory. The sidebar navigation has links to general, security, integrations, support, organizations, and advanced settings."
