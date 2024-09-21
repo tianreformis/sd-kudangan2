@@ -1,9 +1,7 @@
 'use client'
 import { usePathname, useRouter } from 'next/navigation'
-
 import Link from "next/link"
-import { CircleUser, Menu, Package2, Search } from "lucide-react"
-
+import { CircleUser, Menu, Package2, Search, Atom } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import ToggleDarkTheme from "./theme-switcher"
@@ -26,7 +24,7 @@ const Navbar = () => {
           href=""
           className="flex items-center gap-2 text-lg font-semibold md:text-base"
         >
-          <Package2 className="h-6 w-6" />
+          <Atom className="h-6 w-6" />
           <span className="sr-only">Acme Inc</span>
         </Link>
         <Link
@@ -41,19 +39,28 @@ const Navbar = () => {
         </Link>
         <Link
           href="/vision"
-          className={`${pathname === '/vision' ? "text-foreground" : "text-muted-foreground"}  transition-colors hover:text-foreground`}
+          className={`${pathname === '/vision'
+            ? "text-foreground"
+            : "text-muted-foreground"}  
+            transition-colors hover:text-foreground`}
         >
           Visi
         </Link>
         <Link
           href="/photo"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+          className={`${pathname === '/photo' 
+            ? "text-foreground" 
+            : "text-muted-foreground"}  
+            transition-colors hover:text-foreground`}
         >
           Photo
         </Link>
         <Link
           href="/teacher"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+          className={`${pathname === '/teacher' 
+          ? "text-foreground" 
+          : "text-muted-foreground"}  
+          transition-colors hover:text-foreground`}
         >
           Guru
         </Link>
@@ -77,36 +84,40 @@ const Navbar = () => {
               href="#"
               className="flex items-center gap-2 text-lg font-semibold"
             >
-              <Package2 className="h-6 w-6" />
-              <span className="sr-only">Acme Inc</span>
+              <Atom className="h-6 w-6" />
+              <span className="sr-only">SD Kudangan 2</span>
             </Link>
             <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
+              href="/"
+              className={`${pathname === '/'
+                ? "text-foreground"
+                : "text-muted-foreground"}  
+            transition-colors hover:text-foreground underline`
+              }
             >
-              Dashboard
+              Home
             </Link>
             <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
+              href="/vision"
+              className={`${pathname === '/vision' 
+              ? "text-foreground underline" 
+              : "text-muted-foreground"}  
+              transition-colors hover:text-foreground`}
             >
-              Orders
+              Visi
             </Link>
             <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
+              href="/photo"
+              className={`${pathname === '/photo' ? "text-foreground" : "text-muted-foreground"}  transition-colors hover:text-foreground`}
             >
-              Products
+              Photo
             </Link>
             <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
+              href="/teacher"
+              className={`${pathname === '/teacher' ? "text-foreground" : "text-muted-foreground"}  transition-colors hover:text-foreground`}
             >
-              Customers
+              Guru
             </Link>
-            <Link href="#" className="hover:text-foreground">
-              Settings
-            </Link>Dashboard
           </nav>
         </SheetContent>
       </Sheet>
@@ -116,15 +127,15 @@ const Navbar = () => {
 
         </div>
       </div>
-      
+
       {pathname === '/login'
         ? <></>
         : <Button onClick={loginRoute}>
           Login
         </Button >
       }
-      
-      
+
+
 
     </header>
 

@@ -16,12 +16,12 @@ export const description =
 
 const LoginPage = () => {
     return (
-        <div className="flex min-h-screen w-full flex-col justify-center align-middle">
+        <div className="flex w-full flex-col justify-center align-middle">
             <Card className="mx-auto max-w-sm flex flex-col justify-center align-middle">
             <CardHeader>
                 <CardTitle className="text-2xl">Login</CardTitle>
                 <CardDescription>
-                    Enter your email below to login to your account
+                    Masukkan email dibawah untuk dapat login ke sistem
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -39,7 +39,7 @@ const LoginPage = () => {
                         <div className="flex items-center">
                             <Label htmlFor="password">Password</Label>
                             <Link href="#" className="ml-auto inline-block text-sm underline">
-                                Forgot your password?
+                                Lupa Sandi?
                             </Link>
                         </div>
                         <Input id="password" type="password" required />
@@ -48,13 +48,13 @@ const LoginPage = () => {
                         Login
                     </Button>
                     <Button variant="outline" className="w-full">
-                        Login with Google
+                        Login Dengan Google
                     </Button>
                 </div>
                 <div className="mt-4 text-center text-sm">
-                    Don&apos;t have an account?{" "}
+                    Tidak Punya Akun?{" "}
                     <Link href="#" className="underline">
-                        Sign up
+                        Mendaftar
                     </Link>
                 </div>
             </CardContent>
