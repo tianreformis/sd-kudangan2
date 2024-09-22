@@ -4,7 +4,7 @@ import { db } from '@/lib/firebase/init';
 
 // Define types for the data model (for example, User)
 export interface User {
-    id:string;
+    id?:string;
   name: string;
   age: number;
   address:string;

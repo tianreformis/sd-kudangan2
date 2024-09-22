@@ -21,7 +21,7 @@ const EditPage = ({ params }: EditPageProps) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-collectionName: string, id: stringnst fetchedUser = await getDocuments<User>('users', id); // Fetch user by ID
+collectionName: string, id: string, id: string, id: stringnst fetchedUser = await getDocuments<User>('users', id); // Fetch user by ID
         setUser(fetchedUser);
       } catch (error) {
         console.error('Error fetching user:', error);

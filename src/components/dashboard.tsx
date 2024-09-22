@@ -1,30 +1,39 @@
 "use client"
-import { usePathname, useRouter } from 'next/navigation'
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
+
+import { useRouter } from 'next/navigation'
 
 // pages/read.tsx
 import { useEffect, useState } from 'react';
 import { deleteDocument, getDocuments } from '@/lib/firebase/crud';
 import { User } from '@/lib/firebase/crud';
 
-import Image from "next/image"
 import Link from "next/link"
 import {
     File,
     Home,
     LineChart,
     ListFilter,
-    MoreHorizontal,
     Package,
     Package2,
     PanelLeft,
     PlusCircle,
-    Search,
-    Settings,
     ShoppingCart,
     Users2,
 } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
 
 
 import { Button } from "@/components/ui/button"
@@ -40,12 +49,10 @@ import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
-    DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import {
     Table,
@@ -61,11 +68,7 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
+
 
 
 interface UserWithId extends User {
@@ -120,6 +123,13 @@ export function Dashboard() {
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
             <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
                 <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
+                    <Link
+                        href="#"
+                        className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+                    >
+                        <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
+                        <span className="sr-only">Acme Inc</span>
+                    </Link>
                     <Link
                         href="#"
                         className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
@@ -285,10 +295,34 @@ export function Dashboard() {
                                                                 variant="outline"
                                                                 onClick={() => router.push(`/dashboard/edit/${user.id}`)}>Edit</Button>
                                                             <Button
-                                                                onClick={() => handleDelete(user.id)}
+
                                                                 variant="destructive">
-                                                                Hapus
+
+                                                                <AlertDialog>
+                                                                    <AlertDialogTrigger>Hapus</AlertDialogTrigger>
+                                                                    <AlertDialogContent>
+                                                                        <AlertDialogHeader>
+                                                                            <AlertDialogTitle>Apakah Anda ingin Menghapus?</AlertDialogTitle>
+                                                                            <AlertDialogDescription>
+                                                                                Data <span classN ame="underline font-bold">
+                                                                                    {user.id}
+                                                                                </span>
+                                                                                akan terhapus dari server dan tidak dapat dipulihkan
+                                                                            </AlertDialogDescription>
+                                                                        </AlertDialogHeader>
+                                                                        <AlertDialogFooter>
+                                                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                                            <AlertDialogAction
+                                                                                onClick={() => handleDelete(user.id)}
+                                                                            >Continue
+                                                                            </AlertDialogAction>
+                                                                        </AlertDialogFooter>
+                                                                    </AlertDialogContent>
+                                                                </AlertDialog>
                                                             </Button>
+
+
+
 
                                                         </TableCell>
                                                     </TableRow>

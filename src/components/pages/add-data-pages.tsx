@@ -25,19 +25,26 @@ import {
 } from "@/components/ui/select"
 import { useRouter } from 'next/navigation';
 
+
+// Example state variable and setter function
+
 export function AddStudentsPages() {
     //adding function
     const [name, setName] = useState<string>('');
     const [address, setAddress] = useState<string>('');
     const [age, setAge] = useState<number>(0);
     const router = useRouter(); // Initialize useRouter to navigate programmatically
-    const [successMessage, setSuccessMessage] = useState<string>(''); // Success message state
+
+
+    const [successMessage, setSuccessMessage,] = useState<string>(''); // Success message state
+
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         const data: User = {
             name, age, address,
-            id: ''
         };
 
 
@@ -45,12 +52,12 @@ export function AddStudentsPages() {
         console.log('Document created with ID:', docId);
         if (docId) {
             // Set success message
-            setSuccessMessage('User successfully added! Redirecting to home...');
+            setSuccessMessage('Siswa berhasil ditamahkan! Kembali ke Halaman Awal...');
 
             // Redirect to the home page after 2 seconds
             setTimeout(() => {
                 router.push('/dashboard');
-            }, 2000); // 2 seconds delay
+            }, 200); // 2 seconds delay
         } else {
             setSuccessMessage('Error occurred while adding the user.');
         }
@@ -64,36 +71,47 @@ export function AddStudentsPages() {
             <CardContent>
                 <form onSubmit={handleSubmit}>
                     <div className="grid w-full items-center gap-4">
+
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="name">Nama Lengkap</Label>
                             <Input type="text"
                                 id="name"
                                 placeholder="Masukkan Nama"
-                                value={name} onChange={(e) => setName(e.target.value)} />
+                                value={name} onChange={(e) => setName(e.target.value)}
+                                required
+                            />
                         </div>
+                        {/* rest of the form fields */}
+
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="name">Alamat</Label>
                             <Input type="text"
                                 id="address"
                                 placeholder="Masukkan Alamat"
-                                value={address} onChange={(e) => setAddress(e.target.value)} />
+                                value={address} onChange={(e) => setAddress(e.target.value)}
+                                required
+                            />
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="age">Umur</Label>
                             <Input type="number"
                                 id="address"
                                 placeholder="Masukkan Umur"
-                                value={age} onChange={(e) => setAge(Number(e.target.value))} />
+                                value={age} onChange={(e) => setAge(Number(e.target.value))}
+                                required
+                            />
                         </div>
 
 
                     </div>
                     <CardFooter className="flex justify-between my-2">
-                        <Button variant="outline">Cancel</Button>
-                        <Button type='submit'>Deploy</Button>
+                        <Button variant="outline">Batal</Button>
+                        <Button type='submit'>
+                            
+                            Simpan</Button>
                     </CardFooter>
                     {successMessage && <p>{successMessage}</p>} {/* Display success message */}
-      
+
                 </form>
             </CardContent>
 
