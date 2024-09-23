@@ -13,12 +13,6 @@ import {
 } from "@/components/ui/alert-dialog"
 
 
-import { useRouter } from 'next/navigation'
-
-// pages/read.tsx
-import { useEffect, useState } from 'react';
-import { deleteDocument, getDocuments } from '@/lib/firebase/crud';
-import { User } from '@/lib/firebase/crud';
 
 import Link from "next/link"
 import {
@@ -69,21 +63,32 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs"
 
+import { useRouter } from 'next/navigation'
 
+// pages/read.tsx
+import { useEffect, useState } from 'react';
+import { deleteDocument, getDocuments, getCollectionWithPagination } from '@/lib/firebase/crud';
+import { User } from '@/lib/firebase/crud';
+const PAGE_SIZE = 5; // Number of users per page
 
 interface UserWithId extends User {
     id: string; // Add id to the User interface
 }
 
-export function Dashboard() {
+export function DashboardStudents() {
     const [docId, setDocId] = useState<string>('');
 
     const router = useRouter()
     const addDataRoute = () => {
-        router.push('/dashboard/add');
+        router.push('/dashboard/students/add');
     }
     const [users, setUsers] = useState<UserWithId[]>([]);
     const [loading, setLoading] = useState<boolean>(true); // Loading state
+    const [lastVisible, setLastVisible] = useState<any>(null);
+    const [firstVisible, setFirstVisible] = useState<any>(null);
+    const [isNextPageAvailable, setIsNextPageAvailable] = useState<boolean>(true);
+    const [isPrevPageAvailable, setIsPrevPageAvailable] = useState<boolean>(false);
+
 
     useEffect(() => {
         async function fetchData() {
@@ -99,6 +104,7 @@ export function Dashboard() {
         }
         fetchData();
     }, []);
+
 
     const handleDelete = async (id: string) => {
         try {
@@ -120,89 +126,7 @@ export function Dashboard() {
     }
 
     return (
-        <div className="flex min-h-screen w-full flex-col bg-muted/40">
-            <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
-                <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-                    <Link
-                        href="#"
-                        className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
-                    >
-                        <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
-                        <span className="sr-only">Acme Inc</span>
-                    </Link>
-                    <Link
-                        href="#"
-                        className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
-                    >
-                        <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
-                        <span className="sr-only">Acme Inc</span>
-                    </Link>
-
-                </nav>
-                <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-
-                </nav>
-            </aside>
-            <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-                <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-                    <Sheet>
-                        <SheetTrigger asChild>
-                            <Button size="icon" variant="outline" className="sm:hidden">
-                                <PanelLeft className="h-5 w-5" />
-                                <span className="sr-only">Toggle Menu</span>
-                            </Button>
-                        </SheetTrigger>
-                        <SheetContent side="left" className="sm:max-w-xs">
-                            <nav className="grid gap-6 text-lg font-medium">
-                                <Link
-                                    href="#"
-                                    className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-                                >
-                                    <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
-                                    <span className="sr-only">Acme Inc</span>
-                                </Link>
-                                <Link
-                                    href="#"
-                                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                                >
-                                    <Home className="h-5 w-5" />
-                                    Dashboard
-                                </Link>
-                                <Link
-                                    href="#"
-                                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                                >
-                                    <ShoppingCart className="h-5 w-5" />
-                                    Orders
-                                </Link>
-                                <Link
-                                    href="#"
-                                    className="flex items-center gap-4 px-2.5 text-foreground"
-                                >
-                                    <Package className="h-5 w-5" />
-                                    Products
-                                </Link>
-                                <Link
-                                    href="#"
-                                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                                >
-                                    <Users2 className="h-5 w-5" />
-                                    Customers
-                                </Link>
-                                <Link
-                                    href="#"
-                                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                                >
-                                    <LineChart className="h-5 w-5" />
-                                    Settings
-                                </Link>
-                            </nav>
-                        </SheetContent>
-                    </Sheet>
-
-
-                </header>
-                <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+        
                     <Tabs defaultValue="all">
                         <div className="flex items-center">
                             <TabsList>
@@ -272,6 +196,7 @@ export function Dashboard() {
                                                 </TableHead>
                                             </TableRow>
                                         </TableHeader>
+
                                         <TableBody>
                                             {users.length === 0 ? (
                                                 <TableRow>Siswa Tidak Ada/ Tidak Ditemukan</TableRow>
@@ -295,17 +220,15 @@ export function Dashboard() {
                                                                 variant="outline"
                                                                 onClick={() => router.push(`/dashboard/edit/${user.id}`)}>Edit</Button>
                                                             <Button
-
                                                                 variant="destructive">
-
                                                                 <AlertDialog>
                                                                     <AlertDialogTrigger>Hapus</AlertDialogTrigger>
                                                                     <AlertDialogContent>
                                                                         <AlertDialogHeader>
                                                                             <AlertDialogTitle>Apakah Anda ingin Menghapus?</AlertDialogTitle>
                                                                             <AlertDialogDescription>
-                                                                                Data <span classN ame="underline font-bold">
-                                                                                    {user.id}
+                                                                                Data <span className="underline font-bold">
+                                                                                    {user.name}
                                                                                 </span>
                                                                                 akan terhapus dari server dan tidak dapat dipulihkan
                                                                             </AlertDialogDescription>
@@ -334,7 +257,7 @@ export function Dashboard() {
                                 </CardContent>
                                 <CardFooter>
                                     <div className="text-xs text-muted-foreground">
-                                        Showing <strong>1-10</strong> of <strong>32</strong>{" "}
+                                        Showing <strong>1-10</strong> of <strong>{users.length}</strong>{" "}
                                         products
                                     </div>
                                 </CardFooter>
@@ -342,9 +265,7 @@ export function Dashboard() {
 
                         </TabsContent>
                     </Tabs>
-                </main>
-            </div>
-        </div>
+                
     )
 }
 function setError(arg0: string) {

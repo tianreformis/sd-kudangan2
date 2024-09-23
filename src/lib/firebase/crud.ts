@@ -1,13 +1,14 @@
 // lib/crud.ts
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, DocumentData, QuerySnapshot } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, DocumentData, QuerySnapshot, limit, query, startAfter, endBefore, orderBy, QueryDocumentSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase/init';
 
 // Define types for the data model (for example, User)
 export interface User {
-    id?:string;
+  id?: string;
   name: string;
   age: number;
-  address:string;
+  address: string;
+  email: string;
 }
 
 // CREATE: Add a new document to Firestore
@@ -52,4 +53,37 @@ export const deleteDocument = async (collectionName: string, docId: string): Pro
   } catch (error) {
     console.error("Error deleting document: ", error);
   }
+};
+
+export const getCollectionWithPagination = async <T>(
+  collectionName: string,
+  pageSize: number,
+  lastVisibleDoc: QueryDocumentSnapshot | null,
+  isNext: boolean
+): Promise<{ users: T[]; lastDoc: QueryDocumentSnapshot | null; firstDoc: QueryDocumentSnapshot | null }> => {
+  const collectionRef = collection(db, collectionName);
+
+  let q;
+  if (isNext) {
+    if (lastVisibleDoc) {
+      q = query(collectionRef, orderBy('name'), startAfter(lastVisibleDoc), limit(pageSize));
+    } else {
+      q = query(collectionRef, orderBy('name'), limit(pageSize));
+    }
+  } else {
+    // For backward pagination, use `endBefore` to fetch the previous set
+    q = query(collectionRef, orderBy('name'), endBefore(lastVisibleDoc), limit(pageSize));
+  }
+
+  const querySnapshot = await getDocs(q);
+
+  const users = querySnapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as unknown as T[];
+
+  const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
+  const firstDoc = querySnapshot.docs[0] || null;
+
+  return { users, lastDoc, firstDoc };
 };

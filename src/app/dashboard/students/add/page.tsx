@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { createDocument } from '@/lib/firebase/crud';
 import { User } from '@/lib/firebase/crud';
-import { AddStudentsPages } from '@/components/pages/add-data-pages';
+import { AddStudentsViews } from '@/components/views/dashboard/students/add';
 
 export default function CreatePage() {
   const [name, setName] = useState<string>('');
@@ -24,7 +24,7 @@ export default function CreatePage() {
   return (
     <div className='w-full flex items-center justify-center align-middle '>
      
-      <AddStudentsPages />
+      <AddStudentsViews />
     </div>
   );
 }

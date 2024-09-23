@@ -1,7 +1,7 @@
 "use client"
 
 // pages/read.tsx
-import { Dashboard } from '@/components/dashboard';
+import { DashboardCommonView } from '@/components/views/dashboard/dashboard';
 
 // eslint-disable-next-line @next/next/no-async-client-component
 export default  function ReadPage() { 
@@ -10,7 +10,7 @@ export default  function ReadPage() {
 
     return  (
         <div>
-            <Dashboard />
+            <DashboardCommonView />
         </div>
     );
 }

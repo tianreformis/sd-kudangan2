@@ -28,25 +28,28 @@ import { useRouter } from 'next/navigation';
 
 // Example state variable and setter function
 
-export function AddStudentsPages() {
+export function AddStudentsViews() {
     //adding function
     const [name, setName] = useState<string>('');
     const [address, setAddress] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
     const [age, setAge] = useState<number>(0);
     const router = useRouter(); // Initialize useRouter to navigate programmatically
 
 
     const [successMessage, setSuccessMessage,] = useState<string>(''); // Success message state
 
-
+    const backToDashboard= () =>{
+        router.push('/dashboard/students');
+    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const data: User = {
-            name, age, address,
+            name, age, address, email
         };
-
+        
 
         const docId = await createDocument<User>('users', data);
         console.log('Document created with ID:', docId);
@@ -56,7 +59,7 @@ export function AddStudentsPages() {
 
             // Redirect to the home page after 2 seconds
             setTimeout(() => {
-                router.push('/dashboard');
+                router.push('/dashboard/students');
             }, 200); // 2 seconds delay
         } else {
             setSuccessMessage('Error occurred while adding the user.');
@@ -65,7 +68,7 @@ export function AddStudentsPages() {
     return (
         <Card className="w-[350px]">
             <CardHeader>
-                <CardTitle>Tambahkan Siswa </CardTitle>
+                <CardTitle>Ta mbahkan Siswa </CardTitle>
                 <CardDescription>Tambahkan data siswa dengan melengkapi data berikut.</CardDescription>
             </CardHeader>
             <CardContent>
@@ -84,7 +87,7 @@ export function AddStudentsPages() {
                         {/* rest of the form fields */}
 
                         <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="name">Alamat</Label>
+                            <Label htmlFor="address">Alamat</Label>
                             <Input type="text"
                                 id="address"
                                 placeholder="Masukkan Alamat"
@@ -93,9 +96,18 @@ export function AddStudentsPages() {
                             />
                         </div>
                         <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="email">Umur</Label>
+                            <Input type="email"
+                                id="email"
+                                placeholder="Masukkan Umur"
+                                value={email} onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="age">Umur</Label>
                             <Input type="number"
-                                id="address"
+                                id="age"
                                 placeholder="Masukkan Umur"
                                 value={age} onChange={(e) => setAge(Number(e.target.value))}
                                 required
@@ -105,7 +117,7 @@ export function AddStudentsPages() {
 
                     </div>
                     <CardFooter className="flex justify-between my-2">
-                        <Button variant="outline">Batal</Button>
+                        <Button variant="outline" onClick={backToDashboard} type='button'>Batal</Button>
                         <Button type='submit'>
                             
                             Simpan</Button>
