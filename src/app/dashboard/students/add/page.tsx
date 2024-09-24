@@ -2,8 +2,8 @@
 
 // pages/create.tsx
 import { useState } from 'react';
-import { createDocument } from '@/lib/firebase/crud';
-import { User } from '@/lib/firebase/crud';
+import { createDocument } from '@/lib/firebase/crud-students';
+import { User } from '@/lib/firebase/crud-students';
 import { AddStudentsViews } from '@/components/views/dashboard/students/add';
 
 export default function CreatePage() {

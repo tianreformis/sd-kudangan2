@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
-import { createDocument } from '@/lib/firebase/crud';
-import { User } from '@/lib/firebase/crud';
+import { createDocument } from '@/lib/firebase/crud-students';
+import { User } from '@/lib/firebase/crud-students';
 
 import * as React from "react"
 
