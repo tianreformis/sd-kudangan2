@@ -13,7 +13,7 @@ const VisionPage = () => {
                 <AccordionItem value="item-1">
                     <AccordionTrigger className="text-2xl sm:text-3xl font-bold">Visi</AccordionTrigger>
                     <AccordionContent className="text-sm sm:text-lg">
-                        Menjadi sekolah yang unggul dalam membentuk generasi yang berkarakter, berprestasi, dan berwawasan lingkungan melalui pendidikan yang inklusif dan bermutu.
+                        Menjadi sekolah yang unggul dalam membentuk generasi yang berkarakter, berprestasi, dan berwawasan lingkungan melalui pendidikan yang <span className="bg-green-200 underline"> inklusif</span> dan <span className="bg-green-200 underline">bermutu.</span>
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-1">
@@ -31,15 +31,15 @@ const VisionPage = () => {
                         </AccordionContent>
                         </li>
                         <li> <AccordionContent className="text-sm sm:text-lg">
-                            Mewujudkan Lingkungan Belajar yang Nyaman dan Aman: Menyediakan lingkungan belajar yang kondusif, ramah anak, dan bebas dari bullying serta menjaga kebersihan dan kelestarian lingkungan sekolah.
+                        <span className="font-bold bg-green-200 dark:bg-white dark:text-black px-1"> Mewujudkan Lingkungan Belajar yang Nyaman dan Aman:</span> Menyediakan lingkungan belajar yang kondusif, ramah anak, dan bebas dari bullying serta menjaga kebersihan dan kelestarian lingkungan sekolah.
                         </AccordionContent>
                         </li>
                         <li> <AccordionContent className="text-sm sm:text-lg">
-                            Mendorong Partisipasi Orang Tua dan Masyarakat: Melibatkan peran aktif orang tua dan masyarakat dalam mendukung program pendidikan sekolah demi terciptanya sinergi yang positif dalam mendidik anak-anak.
+                        <span className="font-bold bg-green-200 dark:bg-white dark:text-black px-1"> Mendorong Partisipasi Orang Tua dan Masyarakat:</span> Melibatkan peran aktif orang tua dan masyarakat dalam mendukung program pendidikan sekolah demi terciptanya sinergi yang positif dalam mendidik anak-anak.
                         </AccordionContent>
                         </li>
                         <li> <AccordionContent className="text-sm sm:text-lg">
-                            Mengembangkan Kesadaran Lingkungan: Mengintegrasikan pendidikan lingkungan dalam kurikulum dan kegiatan sekolah untuk meningkatkan kepedulian siswa terhadap pelestarian alam dan lingkungan hidup.
+                        <span className="font-bold bg-green-200 dark:bg-white dark:text-black px-1"> Mengembangkan Kesadaran Lingkungan: </span> Mengintegrasikan pendidikan lingkungan dalam kurikulum dan kegiatan sekolah untuk meningkatkan kepedulian siswa terhadap pelestarian alam dan lingkungan hidup.
                         </AccordionContent>
                         </li>
                     </ol>
