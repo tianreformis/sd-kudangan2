@@ -68,7 +68,7 @@ export function AddStudentsViews() {
     return (
         <Card className="w-[350px]">
             <CardHeader>
-                <CardTitle>Ta mbahkan Siswa </CardTitle>
+                <CardTitle>Tambahkan Siswa </CardTitle>
                 <CardDescription>Tambahkan data siswa dengan melengkapi data berikut.</CardDescription>
             </CardHeader>
             <CardContent>

@@ -1,7 +1,7 @@
 "use client"
 
 // pages/read.tsx
-import { DashboardStudents } from '@/components/views/dashboard/students/dashboard';
+import { DashboardStudents } from '@/components/views/dashboard/students/student-dashboard';
 import { useRouter } from 'next/router';
 
 // eslint-disable-next-line @next/next/no-async-client-component
