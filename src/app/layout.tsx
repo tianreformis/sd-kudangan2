@@ -13,6 +13,7 @@ const disableNavbar=[
   '/dashboard',
   '/dashboard/students',
   '/dashboard/students/add',
+  '/dashboard/students/edit${user.id}',
   '/not-found','/notfound',
   '/404',
   '/login'

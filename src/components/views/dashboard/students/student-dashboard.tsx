@@ -83,6 +83,7 @@ export function DashboardStudents() {
     const [docId, setDocId] = useState<string>('');
 
     const router = useRouter()
+
     const addDataRoute = () => {
         router.push('/dashboard/students/add');
     }

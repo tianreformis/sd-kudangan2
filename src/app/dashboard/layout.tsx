@@ -3,13 +3,19 @@
 import DashboardAside from '@/components/layouts/dashboard/dashboard-aside'
 import { DashboardHeader } from '@/components/layouts/dashboard/dashboard-header'
 import { Poppins } from 'next/font/google'
+import { User } from '@/lib/firebase/crud-students';
 
+interface UserWithId extends User {
+  id: string;
+}
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400',] })
+
 const disableNavbar = [
   '/dashboard',
   '/dashboard/students',
   '/dashboard/students/add',
+
   '/not-found',
   '/404',
   '/login'
