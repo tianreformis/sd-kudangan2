@@ -11,8 +11,8 @@ import {
 
 // pages/read.tsx
 import { useEffect, useState } from 'react';
-import { getDocuments } from '@/lib/firebase/crud';
-import { User } from '@/lib/firebase/crud';
+import { getDocuments } from '@/lib/firebase/crud-students';
+import { User } from '@/lib/firebase/crud-students';
 
 interface UserWithId extends User {
     id: string; // Add id to the User interface

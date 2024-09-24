@@ -2,8 +2,8 @@
 // app/edit/[id]/page.tsx
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getDocuments, updateDocument } from '@/lib/firebase/crud'; // Adjust import paths as necessary
-import { User } from '@/lib/firebase/crud';
+import { getDocuments, updateDocument } from '@/lib/firebase/crud-students'; // Adjust import paths as necessary
+import { User } from '@/lib/firebase/crud-students';
 
 interface EditPageProps {
   params: {

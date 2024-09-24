@@ -26,8 +26,8 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 // pages/read.tsx
 import { useEffect, useState } from 'react';
-import { getDocuments } from '@/lib/firebase/crud';
-import { User } from '@/lib/firebase/crud';
+import { getDocuments } from '@/lib/firebase/crud-students';
+import { User } from '@/lib/firebase/crud-students';
 import  DashboardAside  from "@/components/layouts/dashboard/dashboard-aside"
 import { DashboardHeader } from "./dashboard-header"
 

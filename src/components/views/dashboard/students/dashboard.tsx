@@ -67,8 +67,8 @@ import { useRouter } from 'next/navigation'
 
 // pages/read.tsx
 import { useEffect, useState } from 'react';
-import { deleteDocument, getDocuments, getCollectionWithPagination } from '@/lib/firebase/crud';
-import { User } from '@/lib/firebase/crud';
+import { deleteDocument, getDocuments, getCollectionWithPagination } from '@/lib/firebase/crud-students';
+import { User } from '@/lib/firebase/crud-students';
 const PAGE_SIZE = 5; // Number of users per page
 
 interface UserWithId extends User {

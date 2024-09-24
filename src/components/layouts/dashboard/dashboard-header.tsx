@@ -17,7 +17,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 
 // pages/read.tsx
-import { User } from '@/lib/firebase/crud';
+import { User } from '@/lib/firebase/crud-students';
 
 interface UserWithId extends User {
     id: string; // Add id to the User interface
