@@ -71,8 +71,12 @@ import { deleteDocument, getDocuments, getCollectionWithPagination } from '@/lib
 import { User } from '@/lib/firebase/crud-students';
 const PAGE_SIZE = 5; // Number of users per page
 
+
 interface UserWithId extends User {
     id: string; // Add id to the User interface
+    name: string;
+    age: number;
+    address: string;
 }
 
 export function DashboardStudents() {
@@ -115,9 +119,10 @@ export function DashboardStudents() {
             setError('Failed to delete user');
         }
     };
-    const handleEdit = (id: string) => {
-        router.push(`/dashboard/edit?id=${id}`); // Navigate to the edit page with the user's ID
-    };
+    const handleEdit = (userId: string) => {
+        router.push(`/dashboard/students/edit?id=${userId}`);
+      };
+    
 
 
 
@@ -218,7 +223,7 @@ export function DashboardStudents() {
                                                         <TableCell>
                                                             <Button className='mx-2'
                                                                 variant="outline"
-                                                                onClick={() => router.push(`/dashboard/edit/${user.id}`)}>Edit</Button>
+                                                                onClick={() => handleEdit(user.id)}>Edit</Button>
                                                             <Button
                                                                 variant="destructive">
                                                                 <AlertDialog>
