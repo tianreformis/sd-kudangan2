@@ -1,6 +1,7 @@
 // lib/crud.ts
 import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, DocumentData, QuerySnapshot, limit, query, startAfter, endBefore, orderBy, QueryDocumentSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase/init';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 // Define types for the data model (for example, User)
 export interface Teachers {
@@ -9,6 +10,7 @@ export interface Teachers {
   role: string;
   address: string;
   email: string;
+  image:string;
 }
 
 // CREATE: Add a new document to Firestore

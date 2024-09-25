@@ -1,6 +1,7 @@
 // lib/firebase.ts
 import { initializeApp, FirebaseApp } from 'firebase/app';
-import { getFirestore, Firestore, collection, } from 'firebase/firestore';
+import { getFirestore, Firestore, collection} from 'firebase/firestore';
+import {ref, uploadBytesResumable,getStorage, getDownloadURL} from 'firebase/storage'
 
 // Your web app's Firebase configuration (use .env.local for environment variables)
 const firebaseConfig = {

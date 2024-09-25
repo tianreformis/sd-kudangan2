@@ -1,10 +1,7 @@
 'use client'
 import { useState } from 'react';
-import { createDocument } from '@/lib/firebase/crud-students';
-import { User } from '@/lib/firebase/crud-students';
-
-import * as React from "react"
-
+import { createDocument } from '@/lib/firebase/crud-teacher'; // Adjust your import based on the file structure
+import { Teachers } from '@/lib/firebase/crud-teacher'; // Teacher interface
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -14,151 +11,164 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter } from 'next/navigation';
-import { Teachers } from '@/lib/firebase/crud-teacher';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { db } from '@/lib/firebase/init';
 
-
-// Example state variable and setter function
-
+// AddTeacherViews component
 export function AddTeacherViews() {
-    //adding function
+    // State management for form inputs
     const [name, setName] = useState<string>('');
     const [address, setAddress] = useState<string>('');
     const [email, setEmail] = useState<string>('');
-    const [role, setRole] = useState<string>('');
+    const [role, setRole] = useState<string>('teacher'); // Default value set
     const [age, setAge] = useState<number>(0);
-    const router = useRouter(); // Initialize useRouter to navigate programmatically
+    const [image, setImage] = useState<File | null>(null); // For storing the uploaded file
+    const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string>(''); // Success message
 
+    const router = useRouter(); // Initialize useRouter for navigation
+    const storage = getStorage(); // Initialize Firebase Storage
 
-    const [successMessage, setSuccessMessage,] = useState<string>(''); // Success message state
-
+    // Redirect function
     const backToDashboard = () => {
         router.push('/dashboard/teachers');
     }
 
+    // Handle form submission
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const data: Teachers = {
-            name,
-            address,
-            email,
-            role
-        };
+        // Check if all required fields are filled
+        if (!name  || !address || !email || !role) {
+            setError("All fields are required");
+            return;
+        }
 
+        if (!image) {
+            setError("Please select an image");
+            return;
+        }
 
-        const docId = await createDocument<Teachers>('teachers', data);
-        console.log('Document created with ID:', docId);
-        if (docId) {
-            // Set success message
-            setSuccessMessage('Guru berhasil ditamahkan! Kembali ke Halaman Awal...');
+        try {
+            // Upload image to Firebase Storage and get download URL
+            const storageRef = ref(storage, `teachers/${image.name}`);
+            const uploadTask = await uploadBytesResumable(storageRef, image);
+            const imageUrl = await getDownloadURL(uploadTask.ref); // Get image URL
 
-            // Redirect to the home page after 2 seconds
-            setTimeout(() => {
-                router.push('/dashboard/teachers');
-            }, 200); // 2 seconds delay
-        } else {
-            setSuccessMessage('Error occurred while adding the user.');
+            // Create teacher data with the image URL
+            const data: Teachers = {
+                name,
+                address,
+                email,
+                image: imageUrl, // Pass the image URL to Firestore
+                role
+            };
+
+            // Add teacher document to Firestore
+            const docId = await createDocument<Teachers>('teachers', data);
+            console.log('Document created with ID:', docId);
+
+            // Display success message and navigate back after 2 seconds
+            if (docId) {
+                setSuccessMessage('Guru berhasil ditamahkan! Kembali ke Halaman Awal...');
+                setTimeout(() => {
+                    router.push('/dashboard/teachers');
+                }, 2000); // 2 seconds delay
+            }
+        } catch (error) {
+            setError('Error occurred while adding the user.');
+            console.error("Error:", error);
         }
     };
+
+    // Handle image change
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            setImage(e.target.files[0]); // Store selected image file
+        }
+    };
+
     return (
         <Card className="w-[350px] sm:w-5/6">
             <CardHeader>
-                <CardTitle>Tambahkan Guru </CardTitle>
+                <CardTitle>Tambahkan Guru</CardTitle>
                 <CardDescription>Tambahkan data guru dengan melengkapi data berikut.</CardDescription>
             </CardHeader>
             <CardContent>
                 <form onSubmit={handleSubmit}>
                     <div className="grid w-full items-center gap-4">
-
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="name">Nama Lengkap</Label>
-                            <Input type="text"
+                            <Input
+                                type="text"
                                 id="name"
                                 placeholder="Masukkan Nama"
-                                value={name} onChange={(e) => setName(e.target.value)}
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 required
                             />
                         </div>
-                        {/* rest of the form fields */}
 
                         <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="address">Jabatan</Label>
+                            <Label htmlFor="role">Jabatan</Label>
                             <select
                                 className='bg-background border rounded-sm shadow-sm py-2 text-foreground'
                                 value={role}
-                                onChange={(e) => setRole(e.target.value)}
-                                id="role" required >
-                                <option value="principal" className='text-foreground px-2 mx-2'>
-                                    <span className='px-2 mx-3'>Kepala Sekolah</span>
-                                </option>
-                                <option value="vice-principal" className='text-foreground px-2 mx-2'>
-                                    <span className='px-2 mx-3'>Wakil Kepala Sekolah</span>
-                                </option>
-                                
-                                <option value="homeroom-teacher" className='text-foreground px-2 mx-2'>
-                                    <span className='px-2 mx-3'>Wali Kelas</span>
-                                </option>
-                                <option value="teacher" className='text-foreground px-2 mx-2'>
-                                    <span className='px-2 mx-3'>Guru</span>
-                                </option>
-
-                                <option value="admin" className='text-foreground px-2 mx-2'>
-                                    <span className='px-2 mx-3'>Admin</span>
-                                </option>
-                                
-                                <option value="techinicial" className='text-foreground px-2 mx-2'>
-                                    <span className='px-2 mx-3'>Teknisi</span>
-                                </option>
+                                onChange={(e) => setRole(e.target.value)} // Role change handler
+                                id="role"
+                                required
+                            >
+                                <option value="principal">Kepala Sekolah</option>
+                                <option value="vice-principal">Wakil Kepala Sekolah</option>
+                                <option value="homeroom-teacher">Wali Kelas</option>
+                                <option value="teacher">Guru</option>
+                                <option value="admin">Admin</option>
+                                <option value="technician">Teknisi</option>
                             </select>
                         </div>
 
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="email">Email</Label>
-                            <Input type="email"
+                            <Input
+                                type="email"
                                 id="email"
                                 placeholder="Masukkan Email"
-                                value={email} onChange={(e) => setEmail(e.target.value)}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </div>
 
                         <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="email">Alamat</Label>
-                            <Input type="text"
+                            <Label htmlFor="address">Alamat</Label>
+                            <Input
+                                type="text"
                                 id="address"
                                 placeholder="Masukkan Alamat"
-                                value={address} onChange={(e) => setAddress(e.target.value)}
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
                                 required
                             />
                         </div>
 
-
+                        <div>
+                            <label>Upload Image:</label>
+                            <input type="file" onChange={handleImageChange} accept="image/*" required />
+                        </div>
                     </div>
+
                     <CardFooter className="flex my-4 gap-2">
                         <Button variant="outline" onClick={backToDashboard} type='button'>Batal</Button>
-                        <Button type='submit'>
-
-                            Simpan</Button>
+                        <Button type='submit'>Simpan</Button>
                     </CardFooter>
-                    {successMessage && <p>{successMessage}</p>} {/* Display success message */}
 
+                    {error && <p className="text-red-500">{error}</p>}
+                    {successMessage && <p>{successMessage}</p>} {/* Display success message */}
                 </form>
             </CardContent>
-
-
         </Card>
-    )
+    );
 }

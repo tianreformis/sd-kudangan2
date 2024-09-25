@@ -74,7 +74,7 @@ const EditTeacherView = ({ params }: EditPageProps) => {
   }, [teacherId]);
 
   // Handle form input changes
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement |HTMLSelectElement >) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
   };
@@ -165,7 +165,7 @@ const EditTeacherView = ({ params }: EditPageProps) => {
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Role</Label> 
+                    <Label htmlFor="name">Role</Label>
 
                     <select
                       id="role"
@@ -175,30 +175,30 @@ const EditTeacherView = ({ params }: EditPageProps) => {
                       required
                       className="input"
                     >
-                       <option value="principal" className='text-foreground px-2 mx-2'>
-                                    <span className='px-2 mx-3'>Kepala Sekolah</span>
-                                </option>
-                                <option value="vice-principal" className='text-foreground px-2 mx-2'>
-                                    <span className='px-2 mx-3'>Wakil Kepala Sekolah</span>
-                                </option>
-                                
-                                <option value="homeroom-teacher" className='text-foreground px-2 mx-2'>
-                                    <span className='px-2 mx-3'>Wali Kelas</span>
-                                </option>
-                                <option value="teacher" className='text-foreground px-2 mx-2'>
-                                    <span className='px-2 mx-3'>Guru</span>
-                                </option>
+                      <option value="principal" className='text-foreground px-2 mx-2'>
+                        <span className='px-2 mx-3'>Kepala Sekolah</span>
+                      </option>
+                      <option value="vice-principal" className='text-foreground px-2 mx-2'>
+                        <span className='px-2 mx-3'>Wakil Kepala Sekolah</span>
+                      </option>
 
-                                <option value="admin" className='text-foreground px-2 mx-2'>
-                                    <span className='px-2 mx-3'>Admin</span>
-                                </option>
-                                
-                                <option value="techinicial" className='text-foreground px-2 mx-2'>
-                                    <span className='px-2 mx-3'>Teknisi</span>
-                                </option>
+                      <option value="homeroom-teacher" className='text-foreground px-2 mx-2'>
+                        <span className='px-2 mx-3'>Wali Kelas</span>
+                      </option>
+                      <option value="teacher" className='text-foreground px-2 mx-2'>
+                        <span className='px-2 mx-3'>Guru</span>
+                      </option>
+
+                      <option value="admin" className='text-foreground px-2 mx-2'>
+                        <span className='px-2 mx-3'>Admin</span>
+                      </option>
+
+                      <option value="techinicial" className='text-foreground px-2 mx-2'>
+                        <span className='px-2 mx-3'>Teknisi</span>
+                      </option>
                     </select>
                   </div>
-                 
+
 
 
                 </div>
