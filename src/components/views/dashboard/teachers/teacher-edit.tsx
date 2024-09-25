@@ -2,7 +2,7 @@
 // app/edit/[id]/page.tsx
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { User } from '@/lib/firebase/crud-students';
+import { Teachers } from '@/lib/firebase/crud-teacher';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase/init';
 // eslint-disable-next-line @next/next/no-document-import-in-page
@@ -26,16 +26,16 @@ interface EditPageProps {
   };
 }
 
-const EditStudentView = ({ params }: EditPageProps) => {
+const EditTeacherView = ({ params }: EditPageProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const userId = searchParams.get("id");
+  const teacherId = searchParams.get("id");
 
-  const [user, setUser] = useState<User | null>(null);
+  const [teacher, setTeachers] = useState<Teachers | null>(null);
   const [loading, setLoading] = useState(true);
   const [formValues, setFormValues] = useState({
     name: "",
-    age: 0,
+    role: "",
     address: "",
     email: "",
 
@@ -43,22 +43,22 @@ const EditStudentView = ({ params }: EditPageProps) => {
 
   // Fetch the user data from Firestore
   useEffect(() => {
-    if (!userId) return;
+    if (!teacherId) return;
 
     const fetchUser = async () => {
       setLoading(true);
       try {
-        console.log("Fetching user from Firestore with ID:", userId);
-        const userDoc = await getDoc(doc(db, "users", userId));
-        console.log("User document fetched:", userDoc);
-        if (userDoc.exists()) {
-          const userData = userDoc.data() as User;
-          setUser(userData);
+        console.log("Fetching user from Firestore with ID:", teacherId);
+        const teacherDoc = await getDoc(doc(db, "teachers", teacherId));
+        console.log("User document fetched:", teacherDoc);
+        if (teacherDoc.exists()) {
+          const teacherData = teacherDoc.data() as Teachers;
+          setTeachers(teacherData);
           setFormValues({
-            name: userData.name,
-            age: userData.age,
-            address: userData.address,
-            email: userData.email,
+            name: teacherData.name,
+            role: teacherData.role,
+            address: teacherData.address,
+            email: teacherData.email,
 
           });
         } else {
@@ -71,7 +71,7 @@ const EditStudentView = ({ params }: EditPageProps) => {
     };
 
     fetchUser();
-  }, [userId]);
+  }, [teacherId]);
 
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,44 +82,44 @@ const EditStudentView = ({ params }: EditPageProps) => {
   // Handle form submission for updating the user
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!userId) return;
+    if (!teacherId) return;
 
     try {
-      const userRef = doc(db, "users", userId);
+      const userRef = doc(db, "teachers", teacherId);
       await updateDoc(userRef, {
         name: formValues.name,
-        age: formValues.age,
+        role: formValues.role,
         address: formValues.address,
         email: formValues.email,
       });
       // alert("User updated successfully!");     
-      router.push("/dashboard/students"); // Navigate back to the user list page
+      router.push("/dashboard/teachers"); // Navigate back to the user list page
 
     } catch (error) {
-      console.error("Error updating user:", error);
+      console.error("Error updating Teachers:", error);
 
       alert("Failed to update user.");
     }
   };
   const backToDashboard = () => {
-    router.push('/dashboard/students');
+    router.push('/dashboard/teachers');
   }
 
 
   let [color, setColor] = useState("#ffffff");
   if (loading) return
-    <ClipLoader
-      color={color}
-      loading={loading}
-      size={150}
-      aria-label="Loading Spinner"
-      data-testid="loader"
-    />
-      ;
+  <ClipLoader
+    color={color}
+    loading={loading}
+    size={150}
+    aria-label="Loading Spinner"
+    data-testid="loader"
+  />
+    ;
 
   return (
     <div className='flex flex-row justify-center align-middle'>
-      {user &&
+      {teacher &&
         (
           <Card className="w-[350px] sm:w-5/6">
             <CardHeader>
@@ -165,24 +165,24 @@ const EditStudentView = ({ params }: EditPageProps) => {
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Umur</Label>
+                    {/* <Label htmlFor="name">Role</Label>
                     <Input type="text"
                       id="age"
                       name='age'
                       placeholder="Masukkan Umur"
-                      value={formValues.age}
+                      value={formValues.role}
                       onChange={handleInputChange}
                       required
-                    />
+                    /> */}
+
+                    
                   </div>
 
 
                 </div>
                 <CardFooter className="flex my-4 gap-2">
                   <Button variant="outline" onClick={backToDashboard} type='button'>Batal</Button>
-                  <Button type='submit'
-
-                  >
+                  <Button type='submit'>
 
                     Simpan</Button>
                 </CardFooter>
@@ -197,4 +197,4 @@ const EditStudentView = ({ params }: EditPageProps) => {
   );
 };
 
-export default EditStudentView;
+export default EditTeacherView;
