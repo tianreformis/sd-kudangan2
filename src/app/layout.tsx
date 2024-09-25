@@ -13,7 +13,10 @@ const disableNavbar=[
   '/dashboard',
   '/dashboard/students',
   '/dashboard/students/add',
-  '/dashboard/students/edit${user.id}',
+  '/dashboard/students/edit',
+  '/dashboard/teachers',
+  '/dashboard/teachers/add',
+  '/dashboard/teachers/edit',
   '/not-found','/notfound',
   '/404',
   '/login'
@@ -25,7 +28,7 @@ const RootLayout = ({
   children: React.ReactNode
 }) => {
 
-  const [pageTitle, setPageTitle] = useState('My App'); // Local state for dynamic title
+  const [pageTitle, setPageTitle] = useState(''); // Local state for dynamic title
   const pathname = usePathname();
 
   useEffect(() => {
