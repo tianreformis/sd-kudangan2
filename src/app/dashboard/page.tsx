@@ -19,7 +19,7 @@ export default function DashboardCommonPage() {
                 setUser({ email: currentUser.email });
             } else {
                 setUser(null);
-                router.push('/login'); // Redirect to login if not authenticated
+                router.push('/auth/login'); // Redirect to login if not authenticated
             }
         });
         return () => unsubscribe();
@@ -28,7 +28,7 @@ export default function DashboardCommonPage() {
     const handleLogout = async () => {
         const auth = getAuth();
         await signOut(auth);
-        router.push("/login"); // Redirect to login after logout
+        router.push("/auth/login"); // Redirect to login after logout
     };
 
     return (

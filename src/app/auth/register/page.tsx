@@ -19,6 +19,7 @@ const RegisterPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [address, setAddress] = useState(''); // Address state
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -32,7 +33,7 @@ const RegisterPage = () => {
 
         try {
             setLoading(true);
-            await register(email, password);
+            await register(email, password, address); // Pass address to register
             router.push('/dashboard'); // Redirect to dashboard or a welcome page
         } catch (err) {
             setError('Registration failed. Please try again.');
@@ -46,9 +47,9 @@ const RegisterPage = () => {
             <div className="flex w-full flex-col justify-center align-middle sm:my-2">
                 <Card className="mx-auto max-w-sm flex flex-col justify-center align-middle">
                     <CardHeader>
-                        <CardTitle className="text-2xl">Register</CardTitle>
+                        <CardTitle className="text-2xl">Mendaftar</CardTitle>
                         <CardDescription>
-                            Create an account to access the dashboard
+                            Untuk bisa masuk kedalam sistem SD Kudangan 2
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -86,13 +87,24 @@ const RegisterPage = () => {
                                     required
                                 />
                             </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="address">Address</Label> {/* New Address Field */}
+                                <Input
+                                    id="address"
+                                    type="text"
+                                    placeholder="Your address"
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                    required
+                                />
+                            </div>
                             {error && <div className="text-red-500">{error}</div>}
                             <Button type="submit" className="w-full" disabled={loading}>
-                                {loading ? 'Registering...' : 'Register'}
+                                {loading ? 'Mendaftarkan...' : 'Daftar'}
                             </Button>
                         </div>
                         <div className="mt-4 text-center text-sm">
-                            Already have an account?{" "}
+                            Sudah Punya Akun?{" "}
                             <Link href="/auth/login" className="underline">
                                 Login here
                             </Link>

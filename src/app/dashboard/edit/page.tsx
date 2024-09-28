@@ -9,8 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from '@/lib/auth'; // Ensure you have this import
 
 const EditProfilePage = () => {
+    const { user } = useAuth(); // Get the authenticated user
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -20,9 +22,13 @@ const EditProfilePage = () => {
 
     useEffect(() => {
         const fetchUserData = async () => {
-            // Replace 'userId' with the actual user ID from your authentication context
-            const userId = "userId"; // Get this from your authentication context
-            const userRef = doc(db, "users", userId);
+            if (!user) {
+                setError("User not found");
+                setLoading(false);
+                return;
+            }
+
+            const userRef = doc(db, "users", user.uid);
             const userDoc = await getDoc(userRef);
 
             if (userDoc.exists()) {
@@ -37,17 +43,19 @@ const EditProfilePage = () => {
         };
 
         fetchUserData();
-    }, []);
+    }, [user]);
 
     const handleUpdateProfile = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Replace 'userId' with the actual user ID from your authentication context
-        const userId = "userId"; // Get this from your authentication context
+        if (!user) {
+            setError("User not logged in");
+            return;
+        }
 
         try {
             setLoading(true);
-            const userRef = doc(db, "users", userId);
+            const userRef = doc(db, "users", user.uid);
             await setDoc(userRef, {
                 email,
                 name,
