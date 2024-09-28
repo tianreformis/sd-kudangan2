@@ -14,7 +14,7 @@ const Navbar = () => {
   const router = useRouter()
   const pathname = usePathname()
   const loginRoute = () => {
-    router.push('/login');
+    router.push('/auth/login');
   }
   return (
 

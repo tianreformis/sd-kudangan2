@@ -158,7 +158,7 @@ export function AddTeacherViews() {
                             <label>Upload Image:</label>
                             <input type="file" onChange={handleImageChange} accept="image/*" required />
                         </div>
-                    </div>
+                    </div>  
 
                     <CardFooter className="flex my-4 gap-2">
                         <Button variant="outline" onClick={backToDashboard} type='button'>Batal</Button>

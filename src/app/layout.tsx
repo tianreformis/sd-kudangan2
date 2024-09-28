@@ -19,7 +19,8 @@ const disableNavbar=[
   '/dashboard/teachers/edit',
   '/not-found','/notfound',
   '/404',
-  '/login'
+  '/auth/register',
+  '/auth/login',
 ]  
 
 const RootLayout = ({

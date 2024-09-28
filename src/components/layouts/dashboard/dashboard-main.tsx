@@ -34,19 +34,24 @@ import { DashboardHeader } from "./dashboard-header"
 interface UserWithId extends User {
     id: string; // Add id to the User interface
 }
+interface TeachersWithId extends User {
+    id: string; // Add id to the User interface
+}
 
 export function DashboardMain() {
     
 
     const [users, setUsers] = useState<UserWithId[]>([]);
+    const [teachers, setTeachers] = useState<TeachersWithId[]>([]);
     const [loading, setLoading] = useState<boolean>(true); // Loading state
 
 
     useEffect(() => {
-        async function fetchData() {
+        async function fetchStudentsData() {
             try {
                 setLoading(true); // Start loading
                 const data = await getDocuments<UserWithId>('users');
+                
                 setUsers(data);
             } catch (error) {
                 console.error('Error fetching users:', error); // Log any fetching errors
@@ -54,7 +59,21 @@ export function DashboardMain() {
                 setLoading(false); // Stop loading after data is fetched
             }
         }
-        fetchData();
+
+        fetchStudentsData();
+        async function fetchTeachersData() {
+            try {
+                setLoading(true); // Start loading
+                const data = await getDocuments<TeachersWithId>('teachers');
+                
+                setTeachers(data);
+            } catch (error) {
+                console.error('Error fetching users:', error); // Log any fetching errors
+            } finally {
+                setLoading(false); // Stop loading after data is fetched
+            }
+        }
+        fetchTeachersData();
     }, []);
 
 
@@ -71,6 +90,16 @@ export function DashboardMain() {
                         <CardContent>
                             <CardDescription>
                                 {users.length} Orang Siswa
+                            </CardDescription>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Jumlah Guru</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <CardDescription>
+                                {teachers.length} Orang Siswa
                             </CardDescription>
                         </CardContent>
                     </Card>

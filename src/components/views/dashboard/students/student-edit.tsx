@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-import ClipLoader from "react-spinners/ClipLoader";
+
 
 interface EditPageProps {
   params: {
@@ -108,13 +108,7 @@ const EditStudentView = ({ params }: EditPageProps) => {
 
   let [color, setColor] = useState("#ffffff");
   if (loading) return
-    <ClipLoader
-      color={color}
-      loading={loading}
-      size={150}
-      aria-label="Loading Spinner"
-      data-testid="loader"
-    />
+    <div>Loading...!</div>
       ;
 
   return (
